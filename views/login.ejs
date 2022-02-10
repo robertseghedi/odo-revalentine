@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <link href="/login.css" rel="stylesheet" type="text/css">
+    <link href="/normalise.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="star.png">
+    <title>ODO Valentine</title>
+
+    <script>
+        var googleUser = {};
+        var startApp = function () {
+            gapi.load('auth2', function () {
+                auth2 = gapi.auth2.init({
+                    client_id: '458072387181-1fjuvmtvl2vqoci1hdrelq464np2qmd4.apps.googleusercontent.com',
+                    cookiepolicy: 'single_host_origin',
+                });
+                attachSignin(document.getElementById('sign_in'));
+            });
+        };
+
+        function attachSignin(element) {
+            auth2.attachClickHandler(element, {},
+                function (googleUser) {
+                    onSignIn(googleUser)
+                }, function (error) {
+                    alert(JSON.stringify(error, undefined, 2));
+                });
+        }
+
+        function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/login');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function () {
+                if (xhr.responseText == 'success') {
+                    signOut();
+                    location.assign('/dashboard')
+                }
+            };
+
+            xhr.send(JSON.stringify({ token: id_token }));
+        }
+
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <img src="/background.jpg" class="background">
+        <input type="checkbox" id="active">
+        <label for="active" class="menu-btn"><span></span></label>
+        <label for="active" class="close"></label>
+        <div class="wrapper">
+            <span class="wrapper_span">
+                • Conectarea se poate face folosind doar conturi interne ale organizatiei.<br></br>
+                <a href="https://www.instagram.com/cse.alexandru.odobescu/">• Instagram</a><br>
+                <a href="https://cnodobescu.ro/">• Website</a>
+            </span>
+            <div class="header">
+                <span>CSE ODO</span>
+                <img src="star.png" class="header_star">
+            </div>
+        </div>
+        <div class="content">
+            <div class="main_title">
+                <div class="title_container">
+                    <span class="small_title">ODO</span>
+                    <span class="title">valentine</span>
+                </div>
+            </div>
+            <div class="sign_in_container">
+                <div class="sign_in" id="sign_in" data-onsuccess="onSignIn">CONNECT</div>
+            </div>
+            <span class="copyright">© 2022</span>
+        </div>
+    </div>
+
+    <script>
+        startApp()
+    </script>
+</body>
+
+</html>
