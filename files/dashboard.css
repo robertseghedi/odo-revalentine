@@ -204,11 +204,20 @@ input[type="checkbox"] {
 
 .block h1 {
     position: relative;
-    text-shadow: 0px 0px 4px var(--primary);
     width: 100%;
     text-align: center;
     color: var(--onPrimary);
     margin-top: 30px;
+    font-size: 5vw;
+	font-family: KonstantGrotesk;
+}
+
+.block h2 {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    color: var(--onPrimary);
+    margin-top: 10px;
     font-size: 5vw;
 	font-family: KonstantGrotesk;
 }
@@ -305,6 +314,21 @@ textarea:-ms-input-placeholder {
 }
 
 textarea::placeholder {
+	color: var(--primary);
+}
+
+.message {
+	background-color: var(--onPrimary);
+	width: 80%;
+	overflow: hidden;
+	padding: 10px;
+	outline: none;
+	border-radius: 10px;
+	font-family: 'Poppins', sans-serif;
+	overflow-wrap: break-word;
+	font-size: 20px;
+	margin-top: 20px;
+	margin-left: 10%;
 	color: var(--primary);
 }
 

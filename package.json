@@ -1,7 +1,7 @@
 {
-  "name": "odovalentines",
-  "version": "1.0.0",
-  "description": "Odo Valentines Webpage",
+  "name": "odovalentine",
+  "version": "1.0.1",
+  "description": "Odo Valentine Webpage",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

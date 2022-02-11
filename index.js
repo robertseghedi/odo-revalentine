@@ -63,17 +63,18 @@ app.get('/logout', (req, res) => {
   res.redirect('login');
 })
 
-app.get('/dashboard', checkAuthenticated, (req, res) => {
+app.get('/dashboard', checkAuthenticated, async (req, res) => {
   let user = req.user;
 
   async function getMessages() {
-    console.log(await mongoClient.db("odo_valentine").collection("odo_valentine")
-      .findOne({ email: user.email }));
+    const result = await mongoClient.db("odo_valentine").collection("odo_valentine")
+      .findOne({ email: user.email });
+    return result.messages;
   }
 
-  getMessages();
+  let messages = await getMessages();
 
-  res.render('dashboard', { user });
+  res.render('dashboard', { user, messages });
 })
 
 app.post('/dashboard', (req, res) => {
@@ -89,8 +90,8 @@ app.post('/dashboard', (req, res) => {
       /*await mongoClient.db("odo_valentine").collection("odo_valentine")
         .update({}, { $set: { "messages": [] } });*/
 
-      /*await mongoClient.db("odo_valentine").collection("odo_valentine")
-        .updateOne({ name: nume, "class": clasa }, { $push: { "messages": mesaj } });*/
+      await mongoClient.db("odo_valentine").collection("odo_valentine")
+        .updateOne({ name: nume, "class": clasa }, { $push: { "messages": mesaj } });
       console.log(clasa + " " + nume + " a primit un mesaj!");
 
       res.send('success');

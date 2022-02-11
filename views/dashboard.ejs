@@ -83,13 +83,19 @@
 
             <div class="block">
                 <h1>Citeste scrisorile tale</h1>
+                <% if(messages.length != 0) { %>
+                    <% for(var i=0; i<messages.length; i++) { %>
+                        <div class="message"><%= messages[i] %></div>
+                    <% } %>
+                <% } else { %>
+                    <h2>Nu ai niciuo scrisoare!</h2>
+                <% } %>
             </div>
 
             <span class="warning" id="warning">A aparut o eroare!</span>
             <span class="success" id="success">Mesajul a fost trimis!</span>
         </div>
         <span class="copyright">© 2022</span>
-    </div>
     </div>
     <script>
         function updateNames(element) {
